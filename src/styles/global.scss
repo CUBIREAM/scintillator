@@ -8,7 +8,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Geist", "Noto Sans JP", sans-serif;
   text-rendering: optimizelegibility;
   overflow-wrap: break-word;
   word-break: break-all;
@@ -30,7 +30,7 @@ main {
 
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: "Geist", "Noto Sans JP", sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

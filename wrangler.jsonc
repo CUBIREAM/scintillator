@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "Scintillator",
+  "name": "scintillator",
   "main": "worker/index.ts",
   "compatibility_date": "2026-01-28",
   "assets": {
@@ -17,6 +17,7 @@
     {
       "binding": "VRT_R2_BUCKET",
       "bucket_name": "visual-regression-test",
+      "remote": true,
     },
   ],
 }

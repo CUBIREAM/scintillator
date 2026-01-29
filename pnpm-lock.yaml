@@ -23,7 +23,10 @@ importers:
         version: 2.3.13
       '@cloudflare/vite-plugin':
         specifier: ^1.22.1
-        version: 1.22.1(vite@7.3.1(sass-embedded@1.97.3)(sass@1.97.3))(workerd@1.20260128.0)(wrangler@4.61.1)
+        version: 1.22.1(vite@7.3.1(sass-embedded@1.97.3)(sass@1.97.3))(workerd@1.20260128.0)(wrangler@4.61.1(@cloudflare/workers-types@4.20260129.0))
+      '@cloudflare/workers-types':
+        specifier: ^4.20260129.0
+        version: 4.20260129.0
       '@eslint/js':
         specifier: ^9.33.0
         version: 9.39.2
@@ -65,7 +68,7 @@ importers:
         version: 7.3.1(sass-embedded@1.97.3)(sass@1.97.3)
       wrangler:
         specifier: ^4.61.1
-        version: 4.61.1
+        version: 4.61.1(@cloudflare/workers-types@4.20260129.0)
 
 packages:
 
@@ -173,6 +176,9 @@ packages:
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
+
+  '@cloudflare/workers-types@4.20260129.0':
+    resolution: {integrity: sha512-ytqtGV7L60HI/BL/p6tY1A5DIIlNl0NX+wiNeGTyB6e65x1HEeZrceVzL5RsVws7xMsBpF+2VAlm/3ga3c7Txg==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1797,13 +1803,13 @@ snapshots:
     optionalDependencies:
       workerd: 1.20260128.0
 
-  '@cloudflare/vite-plugin@1.22.1(vite@7.3.1(sass-embedded@1.97.3)(sass@1.97.3))(workerd@1.20260128.0)(wrangler@4.61.1)':
+  '@cloudflare/vite-plugin@1.22.1(vite@7.3.1(sass-embedded@1.97.3)(sass@1.97.3))(workerd@1.20260128.0)(wrangler@4.61.1(@cloudflare/workers-types@4.20260129.0))':
     dependencies:
       '@cloudflare/unenv-preset': 2.12.0(unenv@2.0.0-rc.24)(workerd@1.20260128.0)
       miniflare: 4.20260128.0
       unenv: 2.0.0-rc.24
       vite: 7.3.1(sass-embedded@1.97.3)(sass@1.97.3)
-      wrangler: 4.61.1
+      wrangler: 4.61.1(@cloudflare/workers-types@4.20260129.0)
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -1824,6 +1830,8 @@ snapshots:
 
   '@cloudflare/workerd-windows-64@1.20260128.0':
     optional: true
+
+  '@cloudflare/workers-types@4.20260129.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -3119,7 +3127,7 @@ snapshots:
       regexparam: 3.0.0
       use-sync-external-store: 1.6.0(react@19.2.4)
 
-  wrangler@4.61.1:
+  wrangler@4.61.1(@cloudflare/workers-types@4.20260129.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@cloudflare/unenv-preset': 2.12.0(unenv@2.0.0-rc.24)(workerd@1.20260128.0)
@@ -3130,6 +3138,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20260128.0
     optionalDependencies:
+      '@cloudflare/workers-types': 4.20260129.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil

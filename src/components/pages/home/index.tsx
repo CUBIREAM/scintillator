@@ -6,6 +6,8 @@ export const Home = () => (
     <h1>Home</h1>
     <nav className={styles.nav}>
       <Link href="/about">About</Link>
+      <br />
+      <Link href="/diffs">Diff Reports</Link>
     </nav>
   </div>
 )

@@ -1,0 +1,109 @@
+:root {
+  --background: #fff;
+  --foreground: #555;
+  --destructive: #850000;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: "Noto Sans JP", sans-serif;
+  text-rendering: optimizelegibility;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+html {
+  font-size: 16px;
+  text-size-adjust: 100%;
+
+  @media screen and (width <= 480px) {
+    font-size: 14px;
+  }
+}
+
+main {
+  min-height: 100dvh;
+  flex: 1;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+ul,
+ol {
+  padding-left: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+svg {
+  vertical-align: top;
+}
+
+figure {
+  margin: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--foreground, #555);
+  opacity: 0.5;
+  margin: 2rem 0;
+}

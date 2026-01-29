@@ -29,6 +29,7 @@ export default {
       const files = listed.objects.map((obj) => ({
         key: obj.key,
         size: obj.size,
+        url: `${env.BUCKET_ORIGIN}/${obj.key}`,
         uploaded: obj.uploaded
       }))
 

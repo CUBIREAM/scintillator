@@ -5,6 +5,7 @@ import styles from './detail.module.scss'
 interface FileObject {
   key: string
   size: number
+  url: string
   uploaded: string
 }
 
@@ -27,6 +28,9 @@ export const DiffDetail = () => {
 
   const totalSize = files.reduce((acc, file) => acc + file.size, 0)
   const formattedSize = (totalSize / 1024 / 1024).toFixed(2) // MB
+
+  // Filter for image files
+  const imageFiles = files.filter((file) => /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(file.key))
 
   return (
     <div className={styles.dashboardLayout}>
@@ -57,6 +61,35 @@ export const DiffDetail = () => {
         </div>
       </div>
 
+      {/* Image Grid Section */}
+      {imageFiles.length > 0 && (
+        <>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 500, marginBottom: '1rem', color: 'var(--text-main)' }}>
+            Diff Images
+          </h2>
+          <div className={styles.imageGrid}>
+            {imageFiles.map((file) => (
+              <div key={file.key} className={styles.imageCard}>
+                <div className={styles.imagePreview}>
+                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                    <img src={file.url} alt={file.key.split('/').pop()} loading="lazy" />
+                  </a>
+                </div>
+                <div className={styles.imageMeta}>
+                  <div className={styles.imageName} title={file.key.split('/').pop()}>
+                    {file.key.split('/').pop()}
+                  </div>
+                  <div className={styles.imageSize}>{(file.size / 1024).toFixed(1)} KB</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      <h2 style={{ fontSize: '1.25rem', fontWeight: 500, marginBottom: '1rem', color: 'var(--text-main)' }}>
+        All Files
+      </h2>
       <div className={styles.fileList}>
         <div className={styles.tableHeader}>
           <div>Filename</div>
@@ -70,7 +103,16 @@ export const DiffDetail = () => {
         ) : (
           files.map((file) => (
             <div key={file.key} className={styles.tableRow}>
-              <div className={styles.fileName}>{file.key.split('/').pop()}</div>
+              <div className={styles.fileName}>
+                <a
+                  href={file.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'inherit', textDecoration: 'none' }}
+                >
+                  {file.key.split('/').pop()}
+                </a>
+              </div>
               <div className={styles.fileSize}>{(file.size / 1024).toFixed(1)} KB</div>
               <div className={styles.fileDate}>{new Date(file.uploaded).toLocaleString()}</div>
             </div>

@@ -20,4 +20,7 @@
       "remote": true,
     },
   ],
+  "vars": {
+    "BUCKET_ORIGIN": "",
+  },
 }

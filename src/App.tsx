@@ -1,7 +1,7 @@
 import { Route, Switch } from 'wouter'
 import { About } from './components/pages/about'
-import { DiffsList } from './components/pages/diffs'
 import { DiffDetail } from './components/pages/diffs/detail'
+import { DiffsList } from './components/pages/diffs/list'
 import { Home } from './components/pages/home'
 
 function App() {

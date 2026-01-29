@@ -1,8 +1,17 @@
 :root {
-  --background: #fff;
-  --foreground: #555;
-  --destructive: #850000;
+  --bg-app: #f3f4f6;
+  --bg-surface: #ffffff;
+  --text-main: #1f2937;
+  --text-secondary: #6b7280;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --border: #e5e7eb;
+  --destructive: #dc2626;
 }
+
+$mobile: 480px;
+$tablet: 768px;
+$desktop: 1024px;
 
 *,
 *::before,
@@ -18,7 +27,7 @@ html {
   font-size: 16px;
   text-size-adjust: 100%;
 
-  @media screen and (width <= 480px) {
+  @media screen and (width <= $mobile) {
     font-size: 14px;
   }
 }
@@ -32,6 +41,8 @@ body {
   margin: 0;
   font-family: "Geist", "Noto Sans JP", sans-serif;
   line-height: 1.5;
+  background-color: var(--bg-app);
+  color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
@@ -64,7 +75,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 ul,

@@ -5,17 +5,19 @@ export default {
     if (url.pathname === '/api/diffs') {
       const listed = await env.VRT_R2_BUCKET.list({ prefix: 'runs/' })
 
-      console.log(listed)
+      const hashesMap = new Map<string, { hash: string; time: string }>()
 
-      const hashes = new Set<string>()
       for (const object of listed.objects) {
         const parts = object.key.split('/')
         if (parts.length >= 3 && parts[0] === 'runs' && parts[2] === 'diff') {
-          hashes.add(parts[1])
+          const hashVal = parts[1]
+          if (!hashesMap.has(hashVal)) {
+            hashesMap.set(hashVal, { hash: hashVal, time: object.uploaded.toISOString() })
+          }
         }
       }
 
-      return Response.json(Array.from(hashes))
+      return Response.json(Array.from(hashesMap.values()))
     }
 
     const matchDetail = url.pathname.match(/^\/api\/diffs\/([^/]+)$/)

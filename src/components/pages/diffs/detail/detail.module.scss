@@ -103,6 +103,7 @@
 }
 
 .imagePreview {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   background-color: #f3f4f6;
@@ -112,11 +113,29 @@
   overflow: hidden;
   border-bottom: 1px solid var(--border);
 
-  img {
+  .currentImage,
+  .diffImage {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
     display: block;
+  }
+
+  .diffImage {
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 }
 

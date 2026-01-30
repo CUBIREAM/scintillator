@@ -8,6 +8,8 @@ export const Home = () => (
       <Link href="/about">About</Link>
       <br />
       <Link href="/diffs">Diff Reports</Link>
+      <br />
+      <Link href="/references">Reference Images</Link>
     </nav>
   </div>
 )

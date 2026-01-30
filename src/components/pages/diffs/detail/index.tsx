@@ -5,7 +5,8 @@ import styles from './detail.module.scss'
 interface FileObject {
   key: string
   size: number
-  url: string
+  diffUrl: string
+  currentUrl: string
   uploaded: string
 }
 
@@ -29,7 +30,6 @@ export const DiffDetail = () => {
   const totalSize = files.reduce((acc, file) => acc + file.size, 0)
   const formattedSize = (totalSize / 1024 / 1024).toFixed(2) // MB
 
-  // Filter for image files
   const imageFiles = files.filter((file) => /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(file.key))
 
   return (
@@ -61,7 +61,6 @@ export const DiffDetail = () => {
         </div>
       </div>
 
-      {/* Image Grid Section */}
       {imageFiles.length > 0 && (
         <>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 500, marginBottom: '1rem', color: 'var(--text-main)' }}>
@@ -71,13 +70,31 @@ export const DiffDetail = () => {
             {imageFiles.map((file) => (
               <div key={file.key} className={styles.imageCard}>
                 <div className={styles.imagePreview}>
-                  <a href={file.url} target="_blank" rel="noopener noreferrer">
-                    <img src={file.url} alt={file.key.split('/').pop()} loading="lazy" />
-                  </a>
+                  <Link href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}>
+                    <img
+                      className={styles.currentImage}
+                      src={file.currentUrl}
+                      alt={file.key.split('/').pop()}
+                      loading="lazy"
+                      style={{ cursor: 'pointer' }}
+                    />
+                    <img
+                      className={styles.diffImage}
+                      src={file.diffUrl}
+                      alt={file.key.split('/').pop()}
+                      loading="lazy"
+                      style={{ cursor: 'pointer' }}
+                    />
+                  </Link>
                 </div>
                 <div className={styles.imageMeta}>
                   <div className={styles.imageName} title={file.key.split('/').pop()}>
-                    {file.key.split('/').pop()}
+                    <Link
+                      href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
+                      {file.key.split('/').pop()}
+                    </Link>
                   </div>
                   <div className={styles.imageSize}>{(file.size / 1024).toFixed(1)} KB</div>
                 </div>
@@ -104,14 +121,23 @@ export const DiffDetail = () => {
           files.map((file) => (
             <div key={file.key} className={styles.tableRow}>
               <div className={styles.fileName}>
-                <a
-                  href={file.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: 'inherit', textDecoration: 'none' }}
-                >
-                  {file.key.split('/').pop()}
-                </a>
+                {/\.(png|jpg|jpeg|gif|webp|svg)$/i.test(file.key) ? (
+                  <Link
+                    href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    {file.key.split('/').pop()}
+                  </Link>
+                ) : (
+                  <a
+                    href={file.diffUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    {file.key.split('/').pop()}
+                  </a>
+                )}
               </div>
               <div className={styles.fileSize}>{(file.size / 1024).toFixed(1)} KB</div>
               <div className={styles.fileDate}>{new Date(file.uploaded).toLocaleString()}</div>

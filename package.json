@@ -12,6 +12,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@img-comparison-slider/react": "^8.0.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "swr": "^2.3.8",

@@ -118,3 +118,10 @@ hr {
   opacity: 0.5;
   margin: 2rem 0;
 }
+
+img-comparison-slider {
+  outline: none;
+  --divider-width: 2px;
+  --divider-color: #c0c0c0;
+  --default-handle-color: rgba(0, 0, 0, 0.5);
+}

@@ -29,6 +29,20 @@ export default {
       const files = listed.objects.map((obj) => ({
         key: obj.key,
         size: obj.size,
+        diffUrl: `${env.BUCKET_ORIGIN}/${obj.key}`,
+        currentUrl: `${env.BUCKET_ORIGIN}/${obj.key.replace('/diff/', '/current/')}`,
+        uploaded: obj.uploaded
+      }))
+
+      return Response.json(files)
+    }
+
+    if (url.pathname === '/api/references') {
+      const listed = await env.VRT_R2_BUCKET.list({ prefix: 'references/' })
+
+      const files = listed.objects.map((obj) => ({
+        key: obj.key,
+        size: obj.size,
         url: `${env.BUCKET_ORIGIN}/${obj.key}`,
         uploaded: obj.uploaded
       }))

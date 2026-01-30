@@ -1,0 +1,151 @@
+.dashboardLayout {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 1.875rem;
+    font-weight: 500;
+    color: var(--text-main);
+    margin: 0;
+  }
+}
+
+.fileList {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 0.75rem 1.5rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  font-size: 0.875rem;
+  transition: background-color 0.1s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #f9fafb;
+  }
+
+  .fileName {
+    font-weight: 500;
+    color: var(--text-main);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--primary);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .fileSize,
+  .fileDate {
+    color: var(--text-secondary);
+  }
+}
+
+.imageGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media screen and (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.imagePreview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+.imageMeta {
+  padding: 1rem;
+  
+  .imageName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      
+      &:hover {
+        color: var(--primary);
+      }
+    }
+  }
+  
+  .imageSize {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+}

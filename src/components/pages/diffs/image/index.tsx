@@ -1,6 +1,8 @@
 import { ImgComparisonSlider } from '@img-comparison-slider/react'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 import { Link, useRoute } from 'wouter'
+import { useLastViewed } from '../../../../hooks/useLastViewed'
 import styles from './image.module.scss'
 
 interface FileObject {
@@ -19,6 +21,15 @@ export const DiffImage = () => {
   const filename = params?.filename ? decodeURIComponent(params.filename) : ''
 
   const { data: files, error, isLoading } = useSWR<FileObject[]>(hash ? `/api/diffs/${hash}` : null, fetcher)
+  const { markVisited } = useLastViewed('image')
+
+  const file = files?.find((f) => f.key.endsWith(`/${filename}`))
+
+  useEffect(() => {
+    if (file) {
+      markVisited(file.key)
+    }
+  }, [file, markVisited])
 
   if (isLoading) {
     return <div className={styles.dashboardLayout}>Loading image...</div>
@@ -27,8 +38,6 @@ export const DiffImage = () => {
   if (error || !files) {
     return <div className={styles.dashboardLayout}>Error loading data.</div>
   }
-
-  const file = files.find((f) => f.key.endsWith(`/${filename}`))
 
   if (!file) {
     return (

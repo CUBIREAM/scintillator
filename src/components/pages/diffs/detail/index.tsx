@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import useSWR from 'swr'
 import { Link, useRoute } from 'wouter'
+import { useLastViewed } from '../../../../hooks/useLastViewed'
 import styles from './detail.module.scss'
 
 interface FileObject {
@@ -17,6 +19,14 @@ export const DiffDetail = () => {
   const hash = params?.hash
 
   const { data: files, error, isLoading } = useSWR<FileObject[]>(hash ? `/api/diffs/${hash}` : null, fetcher)
+  const { markVisited: markReportVisited } = useLastViewed('report')
+  const { lastViewedId: lastViewedImageKey } = useLastViewed('image')
+
+  useEffect(() => {
+    if (hash) {
+      markReportVisited(hash)
+    }
+  }, [hash, markReportVisited])
 
   if (isLoading) {
     return <div className={styles.dashboardLayout}>Loading details...</div>
@@ -67,39 +77,58 @@ export const DiffDetail = () => {
             Diff Images
           </h2>
           <div className={styles.imageGrid}>
-            {imageFiles.map((file) => (
-              <div key={file.key} className={styles.imageCard}>
-                <div className={styles.imagePreview}>
-                  <Link href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}>
-                    <img
-                      className={styles.currentImage}
-                      src={file.currentUrl}
-                      alt={file.key.split('/').pop()}
-                      loading="lazy"
-                      style={{ cursor: 'pointer' }}
-                    />
-                    <img
-                      className={styles.diffImage}
-                      src={file.diffUrl}
-                      alt={file.key.split('/').pop()}
-                      loading="lazy"
-                      style={{ cursor: 'pointer' }}
-                    />
-                  </Link>
-                </div>
-                <div className={styles.imageMeta}>
-                  <div className={styles.imageName} title={file.key.split('/').pop()}>
-                    <Link
-                      href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      {file.key.split('/').pop()}
+            {imageFiles.map((file) => {
+              const isLastViewed = lastViewedImageKey === file.key
+              return (
+                <div
+                  key={file.key}
+                  className={styles.imageCard}
+                  style={isLastViewed ? { borderColor: 'var(--primary)', boxShadow: '0 0 0 2px var(--primary)' } : {}}
+                >
+                  <div className={styles.imagePreview}>
+                    <Link href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}>
+                      <img
+                        className={styles.currentImage}
+                        src={file.currentUrl}
+                        alt={file.key.split('/').pop()}
+                        loading="lazy"
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <img
+                        className={styles.diffImage}
+                        src={file.diffUrl}
+                        alt={file.key.split('/').pop()}
+                        loading="lazy"
+                        style={{ cursor: 'pointer' }}
+                      />
                     </Link>
                   </div>
-                  <div className={styles.imageSize}>{(file.size / 1024).toFixed(1)} KB</div>
+                  <div className={styles.imageMeta}>
+                    <div className={styles.imageName} title={file.key.split('/').pop()}>
+                      {isLastViewed && (
+                        <span
+                          style={{
+                            color: 'var(--primary)',
+                            marginRight: '0.5rem',
+                            fontSize: '0.75rem',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          ●
+                        </span>
+                      )}
+                      <Link
+                        href={`/diffs/${hash}/${encodeURIComponent(file.key.split('/').pop()!)}`}
+                        style={{ textDecoration: 'none', color: 'inherit' }}
+                      >
+                        {file.key.split('/').pop()}
+                      </Link>
+                    </div>
+                    <div className={styles.imageSize}>{(file.size / 1024).toFixed(1)} KB</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </>
       )}

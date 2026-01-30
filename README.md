@@ -1,4 +1,4 @@
-![](https://assets.cubiream.com/scintillator/scintillator-banner.png)
+![](https://assets.cubiream.com/scintillator/scintillator-banner-black.png)
 
 # scintillator
 

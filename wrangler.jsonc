@@ -21,6 +21,6 @@
     },
   ],
   "vars": {
-    "BUCKET_ORIGIN": "https://vrt.cubiream.com",
+    "BUCKET_ORIGIN": "",
   },
 }

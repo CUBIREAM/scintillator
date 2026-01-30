@@ -37,6 +37,39 @@ export default {
       return Response.json(files)
     }
 
+    const matchNew = url.pathname.match(/^\/api\/diffs\/([^/]+)\/new$/)
+    if (matchNew) {
+      const hash = matchNew[1]
+      const currentPrefix = `runs/${hash}/current/`
+      const referencePrefix = 'references/'
+
+      const [currentListed, referenceListed] = await Promise.all([
+        env.VRT_R2_BUCKET.list({ prefix: currentPrefix }),
+        env.VRT_R2_BUCKET.list({ prefix: referencePrefix })
+      ])
+
+      const referenceFiles = new Set(
+        referenceListed.objects
+          .filter((obj) => obj.key.startsWith(referencePrefix))
+          .map((obj) => obj.key.slice(referencePrefix.length))
+      )
+
+      const newFiles = currentListed.objects
+        .filter((obj) => {
+          const filename = obj.key.replace(currentPrefix, '')
+          return !referenceFiles.has(filename)
+        })
+        .map((obj) => ({
+          key: obj.key,
+          size: obj.size,
+          currentUrl: `${env.BUCKET_ORIGIN}/${obj.key}`,
+          uploaded: obj.uploaded,
+          isNew: true
+        }))
+
+      return Response.json(newFiles)
+    }
+
     if (url.pathname === '/api/references') {
       const listed = await env.VRT_R2_BUCKET.list({ prefix: 'references/' })
 
